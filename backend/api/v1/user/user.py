@@ -1,5 +1,8 @@
+from uuid import UUID
+
 from fastapi import APIRouter
 
+from app.schemas.requests.auth import AuthUpdate
 from core.dependencies.controllers import UserControllerDep
 
 router = APIRouter()
@@ -15,11 +18,11 @@ async def post(controller: UserControllerDep):
     return {"message": "Hello World"}
 
 
-@router.put("/")
-async def put(controller: UserControllerDep):
-    return {"message": "Hello World"}
+@router.put("/{uid}")
+async def put(uid: UUID, data: AuthUpdate, controller: UserControllerDep):
+    return await controller.update(uid=uid, attributes=data.model_dump())
 
 
-@router.delete("/")
-async def delete(controller: UserControllerDep):
-    return {"message": "Hello World"}
+@router.delete("/{uid}")
+async def delete(uid: UUID, controller: UserControllerDep):
+    return await controller.delete(uid=uid)
