@@ -2,6 +2,7 @@ from typing import Any, Dict, Generic, Sequence, Type, TypeVar
 from uuid import UUID
 
 from app.models import DBBase
+from core.exceptions.base import NotFoundException
 from core.repository import BaseRepository
 
 ModelType = TypeVar("ModelType", bound=DBBase)
@@ -16,8 +17,7 @@ class BaseController(Generic[ModelType]):
         obj = await self.repository.get_by_uid(uid)
 
         if obj is None:
-            # TODO: raise not found error
-            raise
+            raise NotFoundException(f"{self.model.__name__} with uid {uid} not found")
         return obj
 
     async def get_all(self, offset: int = 0, limit: int = 100) -> Sequence[ModelType]:

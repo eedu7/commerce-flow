@@ -1,6 +1,7 @@
 from app.models import DBUser
 from app.repositories import UserRepository
 from core.controller.base import BaseController
+from core.exceptions.base import NotFoundException
 
 
 class UserController(BaseController[DBUser]):
@@ -11,13 +12,11 @@ class UserController(BaseController[DBUser]):
     async def get_by_username(self, username: str) -> DBUser:
         user = await self.user_repository.get_by_username(username=username)
         if user is None:
-            # TODO: raise not found error
-            raise
+            raise NotFoundException(detail=f"User with username '{username}' not found")
         return user
 
     async def get_by_email(self, email: str) -> DBUser:
         user = await self.user_repository.get_by_email(email=email)
         if user is None:
-            # TODO: raise not found error
-            raise
+            raise NotFoundException(detail=f"User with email '{email}' not found")
         return user
