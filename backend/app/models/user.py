@@ -1,4 +1,4 @@
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from sqlalchemy import UUID as PG_UUID
 from sqlalchemy import Unicode
@@ -11,7 +11,12 @@ class DBUser(DBBase):
     __tablename__ = "users"
 
     uid: Mapped[UUID] = mapped_column(
-        PG_UUID(as_uuid=True), primary_key=True, index=True, nullable=False, unique=True
+        PG_UUID(as_uuid=True),
+        primary_key=True,
+        index=True,
+        nullable=False,
+        unique=True,
+        default=uuid4,
     )
     email: Mapped[str] = mapped_column(Unicode(255), nullable=False, unique=True)
     username: Mapped[str] = mapped_column(Unicode(255), nullable=False, unique=True)
