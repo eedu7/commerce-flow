@@ -19,6 +19,7 @@ tasks:
   format:
     desc: Format the code using Black
     cmds:
+      - uv run ruff format .
       - uv run ruff check --fix .
       - uv run ruff format .
 
