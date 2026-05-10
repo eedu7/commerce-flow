@@ -12,7 +12,7 @@ def init_routers(app: FastAPI) -> None:
 
 
 def server() -> FastAPI:
-    app_ = FastAPI(title="CommerceFlow", prefix="/api")
+    app_ = FastAPI(title="CommerceFlow")
     init_routers(app_)
     init_middlewares(app_)
     return app_
