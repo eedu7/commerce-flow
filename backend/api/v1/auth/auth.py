@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 
 from app.schemas.requests.auth import AuthIn
 from core.dependencies.controllers import AuthControllerDep
@@ -8,7 +8,7 @@ from core.dependencies.controllers import AuthControllerDep
 router = APIRouter()
 
 
-@router.post("/register")
+@router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(data: AuthIn, controller: AuthControllerDep):
     return await controller.register(data=data)
 
